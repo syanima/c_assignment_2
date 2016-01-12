@@ -36,6 +36,10 @@ void *get_last_element(LinkedList list){
 	return list.tail->value;
 }
 
-// void forEach(LinkedList, ElementProcessor e){
-	
-// }
+void forEach(LinkedList list, ElementProcessor func){
+	 Node *ele = list.head;
+	 while(ele != NULL){
+	   func(ele ->value);
+	   ele = ele -> next;
+	 }
+};

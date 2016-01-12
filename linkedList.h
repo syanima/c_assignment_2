@@ -9,9 +9,10 @@ typedef struct{
 	struct Node *head;
 }LinkedList;
 
+typedef void(*ElementProcessor)(void *);
 
 LinkedList createList(void);
 int add_to_list(LinkedList *linkedlist,void *data);
 void *get_first_element(LinkedList list);
 void *get_last_element(LinkedList list);
-void forEach(LinkedList, ElementProcessor e);
+void forEach(LinkedList, ElementProcessor);
