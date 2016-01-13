@@ -43,3 +43,46 @@ void forEach(LinkedList list, ElementProcessor func){
 	   ele = ele -> next;
 	 }
 };
+
+void * getElementAt(LinkedList linkedlist, int index){
+	Node *ele = linkedlist.head;
+	if(index >= linkedlist.length || index < 0)
+		return NULL;
+	for (int i = 1; i <= index; ++i) {
+		ele = ele->next;
+	}
+	return ele->value;
+}
+
+int indexOf(LinkedList list, void* element){
+	int count = 0;
+	Node *ele = list.head;
+	while(ele != NULL){
+		if(ele->value==element)
+			return count;
+		count++;
+		ele = ele->next;
+	}
+	return -1;
+}
+
+void* deleteElementAt(LinkedList *list, int index) {
+	int i = 0;
+	void* deleted_data = 0;
+	Node *ele = list->head;
+	Node *pre = NULL;
+	if(index < 0 || index >= list->length)
+		return 0;
+	while(i < index){
+		pre = ele;
+		ele = ele->next;
+		i++;
+	}
+	deleted_data = ele->value;
+	pre ? (pre->next = ele->next) : (list->head = list->head->next);
+	ele == list->tail && (list->tail = pre);
+	list->length--;
+	return deleted_data;
+}
+
+

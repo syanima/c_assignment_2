@@ -91,3 +91,57 @@ void test_for_checking_forEach_using_a_traverse_function_using_characters(){
 	assert(*(char *)get_first_element(linkedlist) == 't');
 	assert(*(char *)get_last_element(linkedlist) == 'j');
 }
+
+void  test_for_get_element_which_returns_the_element_at_defined_position(){
+	LinkedList linkedlist = createList();
+	int number1 = 1;
+	int number2 = 2;
+	int number3 = 3;
+	int number4 = 4;
+	int number5 = 5;
+
+	add_to_list(&linkedlist,&number1);
+	add_to_list(&linkedlist,&number2);
+	add_to_list(&linkedlist,&number3);
+	add_to_list(&linkedlist,&number4);
+	add_to_list(&linkedlist,&number5);
+
+	int value = *(int *)getElementAt(linkedlist,2);
+	assert(value == 3);
+}
+
+void  test_for_index_of_which_returns_the_position_of_element(){
+	LinkedList linkedlist = createList();
+	int number1 = 11;
+	int number2 = 12;
+	int number3 = 13;
+	int number4 = 14;
+	int number5 = 15;
+
+	add_to_list(&linkedlist,&number1);
+	add_to_list(&linkedlist,&number2);
+	add_to_list(&linkedlist,&number3);
+	add_to_list(&linkedlist,&number4);
+	add_to_list(&linkedlist,&number5);
+
+	int value = indexOf(linkedlist,&number3);
+	assert(value == 2);
+}
+
+void  test_for_returning_the_data_which_deleted_according_to_the_index(){
+	LinkedList linkedlist = createList();
+	int number1 = 11;
+	int number2 = 12;
+	int number3 = 13;
+	int number4 = 14;
+	int number5 = 15;
+
+	add_to_list(&linkedlist,&number1);
+	add_to_list(&linkedlist,&number2);
+	add_to_list(&linkedlist,&number3);
+	add_to_list(&linkedlist,&number4);
+	add_to_list(&linkedlist,&number5);
+
+	int value = *(int *)deleteElementAt(&linkedlist,4);
+	assert(value == 15);
+}
