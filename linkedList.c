@@ -85,4 +85,14 @@ void* deleteElementAt(LinkedList *list, int index) {
 	return deleted_data;
 }
 
-
+int asArray(LinkedList list, void **array,int maxElements){
+	int included=0,i;
+	Node *ele = list.head;
+	int length = (maxElements > list.length) ? list.length : maxElements;
+		for(i=0;i<length;i++){
+		array[i] = (void*)ele->value;
+		included++;
+		ele = ele->next;  
+	}
+	return included;
+}
