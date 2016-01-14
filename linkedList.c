@@ -118,3 +118,11 @@ LinkedList reverse(LinkedList list){
 	return linkedlist;
 }
 
+LinkedList map(LinkedList list, ConvertFunc convert, void *hint) {
+	Node *element = list.head;
+	while(element != NULL){
+		convert(hint, element->value, element->value);
+		element = element->next;
+	}
+	return list;
+}

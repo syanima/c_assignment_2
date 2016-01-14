@@ -166,6 +166,7 @@ void test_asArray_copies_address_of_all_the_values_to_the_destination_given () {
 	}
 	void *destination = (int *)calloc(6,8);
 	int countIncluded = asArray(list, destination, 6);
+	assert(countIncluded == 6);
 	for (int i = 0; i < 6; ++i){
 		assert(**(int **)destination == array[i]);
 		destination+=8;
@@ -186,7 +187,6 @@ void test_asArray_copies_address_of_the_values_in_the_list_to_the_given_destinat
 		destination+=8;
 	}
 }
-
 
 int isDivisible (void* hint, void* item) {
 	return (*(int *)item) % (*(int *)hint)==0;
@@ -247,7 +247,6 @@ void test_for_filter_with_isDivisible(){
 	LinkedList filterResult = filter(list,isDivisible,&number);
 	int arrayResult[] = {2,4,6,8};
 	void *destination = (int *)calloc(4,8);
-
 	int countIncluded= asArray(filterResult, destination, 4);
 	assert(countIncluded== 4);
 	for (int i = 0; i < filterResult.length; ++i){
@@ -273,3 +272,26 @@ void test_for_reverse(){
 		destination+=8;
 	}
 }
+
+void subtracting_a_value(void* hint, void* sourceItem, void* destinationItem) {
+	*(int *)destinationItem = *(int *)sourceItem - *(int *)hint;
+}
+
+void test_for_map_that_gives_a_new_list_based_on_the_function() {
+	LinkedList list = createList();
+	int array[] = {11,12,13,14,15,16};
+	for (int i = 0; i < 6; ++i){
+		add_to_list(&list, &array[i]);
+		}
+	int number = 4;
+	LinkedList list_of_result = map(list, subtracting_a_value, &number);
+	int arrayResult[] = {7,8,9,10,11,12};
+	void *destination = (int *)calloc(6,8);
+	int countIncluded = asArray(list_of_result, destination, 6);
+	assert(countIncluded == 6);
+	for (int i = 0; i < countIncluded; ++i){
+		assert(**(int **)destination == arrayResult[i]);
+		destination+=8;
+	}
+}
+
