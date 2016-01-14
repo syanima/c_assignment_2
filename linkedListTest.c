@@ -255,3 +255,21 @@ void test_for_filter_with_isDivisible(){
 		destination+=8;
 	}
 }
+
+void test_for_reverse(){
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6,7,8,9};
+	for(int i = 0;i<9;i++){
+		add_to_list(&list,&array[i]);
+	}
+	LinkedList result = reverse(list);
+	int arrayResult[] = {9,8,7,6,5,4,3,2,1};
+	void *destination = (int *)calloc(9,8);
+
+	int countIncluded= asArray(result, destination, 9);
+	assert(countIncluded== 9);
+	for (int i = 0; i < result.length; ++i){
+		assert(**(int **)destination == arrayResult[i]);
+		destination+=8;
+	}
+}

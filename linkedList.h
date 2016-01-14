@@ -22,3 +22,4 @@ int indexOf(LinkedList, void *);
 void * deleteElementAt(LinkedList *, int);
 int asArray(LinkedList ,void **, int);
 LinkedList  filter(LinkedList, MatchFunc, void * );
+LinkedList reverse(LinkedList);

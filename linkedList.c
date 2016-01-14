@@ -107,3 +107,14 @@ LinkedList filter(LinkedList list, MatchFunc match, void *hint) {
 	}
 	return filterResult;
 }
+
+LinkedList reverse(LinkedList list){
+	LinkedList linkedlist = createList();
+	int *value;
+	for(int i=(list.length-1);i>=0;i--){
+		value = getElementAt(list,i);
+		add_to_list(&linkedlist,value);
+	}
+	return linkedlist;
+}
+
