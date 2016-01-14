@@ -150,13 +150,108 @@ void  test_for_returning_the_data_which_deleted_according_to_the_index(){
 void  test_for_returning_the_length_of_array_that_contains_specified_no_of_elements(){
 	LinkedList list = createList();
 	int array[] = {1,2,3,4,5,6};
-
 	for (int i = 0; i < 6; ++i){
 		add_to_list(&list, &array[i]);
 	}
-
 	void *destination = (int *)calloc(6,8);
-
 	int countIncluded = asArray(list, destination, 6);
 	assert(countIncluded == 6);
+}
+
+void test_asArray_copies_address_of_all_the_values_to_the_destination_given () {
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6};
+	for (int i = 0; i < 6; ++i){
+		add_to_list(&list, &array[i]);
+	}
+	void *destination = (int *)calloc(6,8);
+	int countIncluded = asArray(list, destination, 6);
+	for (int i = 0; i < 6; ++i){
+		assert(**(int **)destination == array[i]);
+		destination+=8;
+	}
+}
+
+void test_asArray_copies_address_of_the_values_in_the_list_to_the_given_destination_until_the_given_limit () {
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6};
+	for (int i = 0; i < 6; ++i){
+		add_to_list(&list, &array[i]);
+	}
+	void *destination = (int *)calloc(2,8);
+	int countIncluded = asArray(list, destination, 2);
+	assert(countIncluded == 2);
+	for (int i = 0; i < 2; ++i){
+		assert(**(int **)destination == array[i]);
+		destination+=8;
+	}
+}
+
+
+int isDivisible (void* hint, void* item) {
+	return (*(int *)item) % (*(int *)hint)==0;
+}
+
+int isEven (void* hint, void* item){
+	return (*(int *)item)%2 == 0;
+}
+
+int isOdd (void *hint,void *item){
+	return (*(int *)item)%2 == 1;
+}
+
+
+void test_for_filter_with_isEven(){
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6,7,8};
+	for(int i = 0;i<8;i++){
+		add_to_list(&list,&array[i]);
+	}
+	LinkedList filterResult = filter(list,isEven,NULL);
+	int arrayResult[] = {2,4,6,8};
+	void *destination = (int *)calloc(4,8);
+
+	int countIncluded= asArray(filterResult, destination, 4);
+	assert(countIncluded== 4);
+	for (int i = 0; i < filterResult.length; ++i){
+		assert(**(int **)destination == arrayResult[i]);
+		destination+=8;
+	}
+}
+
+void test_for_filter_with_isOdd(){
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6,7,8,9};
+	for(int i = 0;i<9;i++){
+		add_to_list(&list,&array[i]);
+	}
+	LinkedList filterResult = filter(list,isOdd,NULL);
+	int arrayResult[] = {1,3,5,7,9};
+	void *destination = (int *)calloc(5,8);
+
+	int countIncluded= asArray(filterResult, destination, 5);
+	assert(countIncluded== 5);
+	for (int i = 0; i < filterResult.length; ++i){
+		assert(**(int **)destination == arrayResult[i]);
+		destination+=8;
+	}
+}
+
+void test_for_filter_with_isDivisible(){
+	LinkedList list = createList();
+	int array[] = {1,2,3,4,5,6,7,8,9};
+	for(int i = 0;i<9;i++){
+		add_to_list(&list,&array[i]);
+	}
+	int number = 2;
+	LinkedList filterResult = filter(list,isDivisible,&number);
+	int arrayResult[] = {2,4,6,8};
+	void *destination = (int *)calloc(4,8);
+
+	int countIncluded= asArray(filterResult, destination, 4);
+	assert(countIncluded== 4);
+	for (int i = 0; i < filterResult.length; ++i){
+		assert(**(int **)destination == arrayResult[i]);
+		destination+=8;
+	}
 }

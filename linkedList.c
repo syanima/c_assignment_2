@@ -96,3 +96,14 @@ int asArray(LinkedList list, void **array,int maxElements){
 	}
 	return included;
 }
+
+LinkedList filter(LinkedList list, MatchFunc match, void *hint) {
+	LinkedList filterResult = createList();
+	Node *element = list.head;
+	while(element != NULL){
+		if(match(hint,element->value))
+			add_to_list(&filterResult, element->value);
+		element = element->next;
+	}
+	return filterResult;
+}
