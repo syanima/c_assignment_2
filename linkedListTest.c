@@ -295,3 +295,18 @@ void test_for_map_that_gives_a_new_list_based_on_the_function() {
 	}
 }
 
+void *add_all_element(void* hint, void* previousItem, void* item){
+  *(int *)item = *(int *)item + *(int *)previousItem;
+  return item;
+}
+
+void test_for_reducing_the_list(){
+	LinkedList list = createList();
+	int array[] = {5,6,7,8,9,10};
+	for(int i=0;i<6;i++){
+		add_to_list(&list,&array[i]);
+	}
+	int hint = 0;
+	int redused_result = *(int *)reduce(list, &add_all_element, &hint, &hint);
+	assert(redused_result == 45);
+}

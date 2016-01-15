@@ -66,23 +66,28 @@ int indexOf(LinkedList list, void* element){
 	return -1;
 }
 
-void* deleteElementAt(LinkedList *list, int index) {
-	int i = 0;
-	void* deleted_data = 0;
-	Node *ele = list->head;
-	Node *pre = NULL;
-	if(index < 0 || index >= list->length)
-		return 0;
-	while(i < index){
-		pre = ele;
-		ele = ele->next;
-		i++;
-	}
-	deleted_data = ele->value;
-	pre ? (pre->next = ele->next) : (list->head = list->head->next);
-	ele == list->tail && (list->tail = pre);
-	list->length--;
-	return deleted_data;
+void * deleteElementAt(LinkedList *list, int index){
+  if(index > list->length || index < 0) return NULL;
+    Node *element = list->head;
+    Node *deletedElement;
+    if(index == 0) {
+      deletedElement = list->head;
+      list->head = list->head->next;
+    }else{
+      for(int i = 0;i < index - 1; i++){
+        element = element->next;
+      };
+      if(index == list->length-1){
+        deletedElement = element->next;
+        list->tail = element;
+      }else{
+        deletedElement = element->next;
+        element->next = element->next->next;
+      }
+    }
+    list->length--;
+    free(deletedElement);
+    return deletedElement->value;
 }
 
 int asArray(LinkedList list, void **array,int maxElements){
@@ -118,11 +123,24 @@ LinkedList reverse(LinkedList list){
 	return linkedlist;
 }
 
-LinkedList map(LinkedList list, ConvertFunc convert, void *hint) {
+LinkedList map(LinkedList list, ConvertFunc convert, void *hint){
+  Node *element = list.head;
+  LinkedList destination = createList();
+  for(int i = 0; i < list.length; i++){
+    void *ele;
+    ele = (void *)malloc(4);
+    convert(hint, element->value, ele);
+    element = element->next;
+    add_to_list(&destination, ele);
+  }
+  return destination;
+}
+
+void * reduce(LinkedList list, Reducer reduce, void *hint, void *initialValue){
 	Node *element = list.head;
-	while(element != NULL){
-		convert(hint, element->value, element->value);
-		element = element->next;
-	}
-	return list;
+	for(int i = 0; i < list.length; i++){
+    	initialValue = reduce(hint, initialValue, element->value);
+    element = element->next;
+  }
+  return initialValue;
 }
